@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgroForte | Inteligência de Precisão & Sustentabilidade</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            agroGreen: {
+              50: '#f2f9f4',
+              600: '#16a34a',
+              700: '#15803d',
+              900: '#14532d',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+
+  <nav class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-slate-200/50 px-6 py-4 flex justify-between items-center shadow-sm">
+    <div class="flex items-center gap-2">
+      <span class="text-2xl font-extrabold tracking-tight text-agroGreen-900">Agro<span class="text-agroGreen-600">Forte</span></span>
+    </div>
+    <div class="hidden md:flex items-center gap-8 font-medium text-slate-600">
+      <a href="#scrollytelling" class="hover:text-agroGreen-600 transition">Métricas em Tempo Real</a>
+      <a href="#techShowcase" class="hover:text-agroGreen-600 transition">Ecossistema Tecnológico</a>
+      <a href="#simulator" class="hover:text-agroGreen-600 transition">Simulador de Impacto</a>
+    </div>
+    <a href="#simulator" class="px-5 py-2.5 bg-agroGreen-900 text-white rounded-full font-semibold text-sm hover:bg-agroGreen-700 transition shadow-md shadow-agroGreen-900/10">
+      Falar com Consultor
+    </a>
+  </nav>
+
+  <header class="relative w-full h-screen overflow-hidden flex items-center justify-start px-8 md:px-24" aria-label="Seção Principal">
+    <div class="absolute inset-0 bg-gradient-to-r pdf-overlay from-black/80 via-black/50 to-transparent z-10"></div>
+    <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover">
+      <source src="video-lavoura.mp4" type="video/mp4">
+    </video>
+    
+    <div class="relative z-20 max-w-3xl text-left">
+      <span class="inline-block px-4 py-1.5 bg-agroGreen-600/20 border border-agroGreen-500/30 text-agroGreen-500 rounded-full text-xs font-bold uppercase tracking-wider mb-6">
+        A Nova Era da Agricultura Digital
+      </span>
+      <h1 class="text-5xl md:text-7xl font-black text-white leading-tight drop-shadow-sm">
+        Produtividade Máxima,<br><span class="bg-gradient-to-r from-emerald-400 to-green-500 bg-clip-text text-transparent">Impacto Mínimo.</span>
+      </h1>
+      <p class="mt-6 text-lg md:text-xl text-slate-300 max-w-xl leading-relaxed">
+        Conectamos inteligência artificial de ponta, dados climáticos preditivos e automação aérea para transformar lavouras tradicionais em ecossistemas de alta rentabilidade e carbono zero.
+      </p>
+      <div class="mt-10 flex flex-col sm:flex-row gap-4">
+        <button id="startJourney" class="px-8 py-4 bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold rounded-xl shadow-xl shadow-green-600/20 hover:from-emerald-600 hover:to-green-700 transition-all transform hover:-translate-y-0.5">
+          Comece sua jornada
+        </button>
+        <a href="#techShowcase" class="px-8 py-4 bg-white/10 backdrop-blur-md text-white border border-white/20 font-semibold rounded-xl hover:bg-white/20 transition text-center">
+          Conhecer Tecnologias
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <section id="scrollytelling" class="w-[400vw] h-screen flex bg-slate-900" aria-label="Jornada Horizontal">
+    
+    <div class="section w-screen flex-shrink-0 flex items-center justify-center px-12 md:px-24">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center w-full max-w-6xl">
+        <div class="text-left text-white">
+          <span class="text-emerald-400 font-bold uppercase tracking-widest text-sm">Fase 01 // Sensores IoT</span>
+          <h2 class="text-4xl md:text-5xl font-extrabold mt-2 mb-6">Análise Hidrodinâmica Automatizada</h2>
+          <p class="text-slate-400 text-lg leading-relaxed">
+            Nossos sensores subterrâneos medem constantemente o balanço hídrico das raízes. Os dados alimentam nossa IA para prever momentos de estresse hídrico com até 48 horas de antecedência, evitando o desperdício em pivôs centrais.
+          </p>
+        </div>
+        <div class="bg-slate-800/80 p-8 rounded-2xl border border-slate-700/50 flex justify-center backdrop-blur-sm">
+          <div class="w-full max-w-[400px]">
+            <canvas id="soilChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section w-screen flex-shrink-0 flex items-center justify-center px-12 md:px-24 bg-gradient-to-b from-slate-900 to-emerald-950">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center w-full max-w-6xl">
+        <div class="text-left text-white order-2 md:order-1">
+          <span class="text-emerald-400 font-bold uppercase tracking-widest text-sm">Fase 02 // Automação Aérea</span>
+          <h2 class="text-4xl md:text-5xl font-extrabold mt-2 mb-6">Drones de Aplicação Ultra-Precisa</h2>
+          <p class="text-slate-400 text-lg leading-relaxed">
+            Substitua a pulverização tratorizada pesada. Utilizando visão computacional avançada, nossos drones identificam infestações folha a folha, aplicando bioinsumos cirurgicamente apenas onde é necessário.
+          </p>
+        </div>
+        <div class="flex items-center justify-center order-1 md:order-2">
+          <div class="relative w-72 h-72 flex items-center justify-center">
+            <div class="absolute inset-0 bg-emerald-500/10 rounded-full animate-ping"></div>
+            <div class="drone-animation w-56 h-56 bg-gradient-to-br from-emerald-400 to-green-600 rounded-2xl flex flex-col items-center justify-center shadow-2xl text-slate-900 p-6 text-center">
+              <span class="text-xs font-bold tracking-widest uppercase opacity-70">Status Drone</span>
+              <span class="text-3xl font-black my-2">98.4%</span>
+              <span class="text-sm font-semibold">Precisão de Alvo</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section w-screen flex-shrink-0 flex items-center justify-center px-12 md:px-24">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center w-full max-w-6xl">
+        <div class="text-left text-white">
+          <span class="text-emerald-400 font-bold uppercase tracking-widest text-sm">Fase 03 // Descarbonização</span>
+          <h2 class="text-4xl md:text-5xl font-extrabold mt-2 mb-6">Logística de Carbono Neutro</h2>
+          <p class="text-slate-400 text-lg leading-relaxed">
+            Otimizamos as rotas de maquinário pesado e escoamento de safras por meio de algoritmos genéticos. Menos queima de diesel significa créditos de carbono gerados e maior valor agregado ao seu grão ou cultura no mercado internacional.
+          </p>
+        </div>
+        <div class="bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl border border-slate-700/50 text-white text-center">
+          <h4 class="text-slate-400 font-medium mb-2">Redução Estimada de <span class="text-emerald-400 font-bold">CO₂</span></h4>
+          <div class="text-6xl font-black tracking-tight text-white my-4">-35%</div>
+          <p class="text-sm text-slate-500">Média calculada com base em propriedades parceiras na safra 2025/2026.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="techShowcase" class="py-24 px-6 max-w-7xl mx-auto" aria-label="Vitrine Tecnológica">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <span class="text-agroGreen-600 font-bold text-sm tracking-wider uppercase">Hub de Inovação</span>
+      <h2 class="text-3xl md:text-5xl font-black tracking-tight text-slate-900 mt-2">Nossas Soluções de Próxima Geração</h2>
+      <p class="text-slate-500 text-lg mt-4">Tecnologia integrada de ponta a ponta para maximizar a rentabilidade por hectare.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="card bg-white p-8 rounded-2xl shadow-md border border-slate-100 hover:shadow-xl transition-all cursor-pointer" tabindex="0">
+        <div class="w-12 h-12 bg-emerald-500/10 text-emerald-600 rounded-xl flex items-center justify-center font-bold mb-6">01</div>
+        <h3 class="text-2xl font-bold text-slate-900 mb-3">Drones de Precisão</h3>
+        <p class="text-slate-500 leading-relaxed mb-4">Mapeamento espectral avançado. Economize até 30% na compra de insumos defensivos localizando pragas cirurgicamente.</p>
+        <span class="text-sm font-semibold text-agroGreen-600 inline-flex items-center gap-1">Saiba mais &rarr;</span>
+      </div>
+      <div class="card bg-white p-8 rounded-2xl shadow-md border border-slate-100 hover:shadow-xl transition-all cursor-pointer" tabindex="0">
+        <div class="w-12 h-12 bg-blue-500/10 text-blue-600 rounded-xl flex items-center justify-center font-bold mb-6">02</div>
+        <h3 class="text-2xl font-bold text-slate-900 mb-3">Sensores Telemétricos</h3>
+        <p class="text-slate-500 leading-relaxed mb-6">Malha de sensores inteligentes enterrados diretamente nas linhas de plantio mais críticas.</p>
+        <div class="w-full flex justify-center">
+          <canvas id="waterChart" width="260" height="150"></canvas>
+        </div>
+      </div>
+      <div class="card bg-white p-8 rounded-2xl shadow-md border border-slate-100 hover:shadow-xl transition-all cursor-pointer" tabindex="0">
+        <div class="w-12 h-12 bg-amber-500/10 text-amber-600 rounded-xl flex items-center justify-center font-bold mb-6">03</div>
+        <h3 class="text-2xl font-bold text-slate-900 mb-3">Bioinsumos Regenerativos</h3>
+        <p class="text-slate-500 leading-relaxed mb-4">Aumente a resiliência biológica da plantação com microrganismos adaptados ao solo regional.</p>
+        <div class="before-after h-32 bg-slate-100 rounded-xl flex items-center justify-center text-xs font-semibold text-slate-400 shadow-inner">
+          Passe o mouse para simular o crescimento
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="simulator" class="py-24 bg-slate-900 text-white relative overflow-hidden" aria-label="Simulador Agroecológico">
+    <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div>
+        <span class="text-emerald-400 font-bold text-sm tracking-wider uppercase">Simulador Interativo</span>
+        <h2 class="text-4xl md:text-5xl font-black tracking-tight mt-2 mb-6">Tome Decisões e Veja os Resultados</h2>
+        <p class="text-slate-400 text-lg leading-relaxed mb-8">
+          Escolha um modelo de gestão abaixo e analise no gráfico de teia em tempo real como suas escolhas alteram a balança financeira e ambiental da fazenda.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <button id="conventionalBtn" class="px-6 py-4 bg-slate-800 border border-red-500/30 text-red-400 rounded-xl font-bold hover:bg-red-500/10 transition-all">
+            Prática Convencional
+          </button>
+          <button id="sustainableBtn" class="px-6 py-4 bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold rounded-xl shadow-lg shadow-emerald-500/20 hover:from-emerald-600 hover:to-green-700 transition-all">
+            Solução Sustentável AgroForte
+          </button>
+        </div>
+      </div>
+      <div class="bg-slate-800/50 p-8 rounded-3xl border border-slate-700/50 backdrop-blur-md flex justify-center items-center">
+        <div class="w-full max-w-[420px]">
+          <canvas id="radarChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-slate-950 text-slate-500 py-12 border-t border-slate-900 px-6 text-center text-sm">
+    <p>&copy; 2026 AgroForte Inteligência Agrícola S.A. Todos os direitos reservados.</p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

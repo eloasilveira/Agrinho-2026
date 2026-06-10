@@ -1,0 +1,42 @@
+/* Custom resets de design corporativo */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* Tratamento do Scroll horizontal do GSAP */
+#scrollytelling {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.section {
+  flex-shrink: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* Efeito Hover nos Cards de Tecnologia */
+.card {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(22, 163, 74, 0.2);
+}
+
+/* Simulação de Efeito "Antes e Depois" Interativo nos cards */
+.before-after {
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s ease;
+}
+
+.before-after:hover {
+  background-color: #ecfdf5;
+  color: #059669;
+}
